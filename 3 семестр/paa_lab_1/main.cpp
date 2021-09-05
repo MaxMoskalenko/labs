@@ -8,6 +8,7 @@ void insertion_sort(int *array, int arr_size, long &tr_num, long &cmp_num);
 void print_answer(const char *sort_type, const char *arr_size, const char *gen_type, long tr_num, long cmp_num);
 void heap_sort(int *array, int arr_size, long &tr_num, long &cmp_num);
 void heapify(int *array, int arr_size, int index, long &tr_num, long &cmp_num);
+void radix_sort(int *array, int arr_size, long &tr_num, long &cmp_num);
 
 int main(int argc, char const *argv[])
 {
@@ -28,6 +29,17 @@ int main(int argc, char const *argv[])
     else if (!strcmp(argv[1], "II"))
     {
         heap_sort(array, atoi(argv[2]), transpostion_num, comparison_num);
+        print_answer(argv[1], argv[2], argv[3], transpostion_num, comparison_num);
+    }
+    else if (!strcmp(argv[1], "III"))
+    {
+        radix_sort(array, atoi(argv[2]), transpostion_num, comparison_num);
+        print_answer(argv[1], argv[2], argv[3], transpostion_num, comparison_num);
+    }
+    else
+    {
+        std::cout << "Unknown type of sorting, I will use insertion one" << std::endl;
+        insertion_sort(array, atoi(argv[2]), transpostion_num, comparison_num);
         print_answer(argv[1], argv[2], argv[3], transpostion_num, comparison_num);
     }
 
@@ -123,6 +135,50 @@ void heapify(int *array, int arr_size, int index, long &tr_num, long &cmp_num)
 
         heapify(array, arr_size, largest, tr_num, cmp_num);
     }
+}
+
+int get_max(int *array, int arr_size, long &cmp_num)
+{
+    int max = array[0];
+    for (int i = 1; i < arr_size; i++)
+    {
+        cmp_num++;
+        max = array[i] > max ? array[i] : max;
+    }
+
+    return max;
+}
+
+void count_sort(int *array, int arr_size, int exp, long &tr_num)
+{
+    int output[arr_size];
+    int i, count[10] = {0};
+
+    for (i = 0; i < arr_size; i++)
+        count[(array[i] / exp) % 10]++;
+
+    for (i = 1; i < 10; i++)
+        count[i] += count[i - 1];
+
+    for (i = arr_size - 1; i >= 0; i--)
+    {
+        output[count[(array[i] / exp) % 10] - 1] = array[i];
+        count[(array[i] / exp) % 10]--;
+    }
+
+    for (i = 0; i < arr_size; i++)
+    {
+        tr_num++;
+        array[i] = output[i];
+    }
+}
+
+void radix_sort(int *array, int arr_size, long &tr_num, long &cmp_num)
+{
+    int max = get_max(array, arr_size, cmp_num);
+
+    for (int exp = 1; max / exp > 0; exp *= 10)
+        count_sort(array, arr_size, exp, tr_num);
 }
 
 void print_answer(const char *sort_type, const char *arr_size, const char *gen_type, long tr_num, long cmp_num)
