@@ -13,8 +13,19 @@ insertion: compile
 	@./main I 100000 b
 	@./main I 100000 c 
 
+heap: compile
+	@./main II 1000 a
+	@./main II 1000 b
+	@./main II 1000 c
+	@./main II 10000 a
+	@./main II 10000 b
+	@./main II 10000 c
+	@./main II 100000 a
+	@./main II 100000 b
+	@./main II 100000 c 
+
 test: compile 
 	@./main I 10 b
 	
 clean: compile
-	@rm main.o
+	@rm main

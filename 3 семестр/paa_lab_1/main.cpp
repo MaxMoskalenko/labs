@@ -6,6 +6,8 @@ void print_array(int *arr, int size);
 int *generate_array(int size, const char *type);
 void insertion_sort(int *array, int arr_size, long &tr_num, long &cmp_num);
 void print_answer(const char *sort_type, const char *arr_size, const char *gen_type, long tr_num, long cmp_num);
+void heap_sort(int *array, int arr_size, long &tr_num, long &cmp_num);
+void heapify(int *array, int arr_size, int index, long &tr_num, long &cmp_num);
 
 int main(int argc, char const *argv[])
 {
@@ -21,6 +23,11 @@ int main(int argc, char const *argv[])
     if (!strcmp(argv[1], "I"))
     {
         insertion_sort(array, atoi(argv[2]), transpostion_num, comparison_num);
+        print_answer(argv[1], argv[2], argv[3], transpostion_num, comparison_num);
+    }
+    else if (!strcmp(argv[1], "II"))
+    {
+        heap_sort(array, atoi(argv[2]), transpostion_num, comparison_num);
         print_answer(argv[1], argv[2], argv[3], transpostion_num, comparison_num);
     }
 
@@ -78,6 +85,43 @@ void insertion_sort(int *array, int arr_size, long &tr_num, long &cmp_num)
         }
         tr_num++;
         array[j + 1] = key;
+    }
+}
+
+void heap_sort(int *array, int arr_size, long &tr_num, long &cmp_num)
+{
+    for (int i = arr_size / 2 - 1; i >= 0; i--)
+        heapify(array, arr_size, i, tr_num, cmp_num);
+
+    for (int i = arr_size - 1; i > 0; i--)
+    {
+        tr_num++;
+        std::swap(array[0], array[i]);
+
+        heapify(array, i, 0, tr_num, cmp_num);
+    }
+}
+
+void heapify(int *array, int arr_size, int index, long &tr_num, long &cmp_num)
+{
+    int largest = index;
+    int left = 2 * index + 1;
+    int right = 2 * index + 2;
+
+    cmp_num++;
+    if (left < arr_size && array[left] > array[largest])
+        largest = left;
+
+    cmp_num++;
+    if (right < arr_size && array[right] > array[largest])
+        largest = right;
+
+    if (largest != index)
+    {
+        tr_num++;
+        std::swap(array[index], array[largest]);
+
+        heapify(array, arr_size, largest, tr_num, cmp_num);
     }
 }
 
