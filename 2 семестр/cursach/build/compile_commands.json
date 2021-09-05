@@ -1,0 +1,7 @@
+[
+{
+  "directory": "/Users/maxmoskalenko/University/labs/cursach/build",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++   -g -o CMakeFiles/cursach.dir/main.cpp.o -c /Users/maxmoskalenko/University/labs/cursach/main.cpp",
+  "file": "/Users/maxmoskalenko/University/labs/cursach/main.cpp"
+}
+]

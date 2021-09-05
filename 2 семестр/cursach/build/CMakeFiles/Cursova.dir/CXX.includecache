@@ -1,0 +1,20 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/maxmoskalenko/University/labs/cursach/main.cpp
+iostream
+-
+vector
+-
+cstring
+-
+iomanip
+-
+cmath
+-
+
