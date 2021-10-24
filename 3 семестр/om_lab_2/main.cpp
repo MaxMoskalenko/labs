@@ -14,6 +14,7 @@ struct SLE
     vector<vector<double> > A;
     vector<vector<double> > T;
     vector<vector<double> > A_I;
+    vector<vector<double> > I;
     vector<double> T_b;
     vector<double> b;
     vector<double> x;
@@ -26,6 +27,7 @@ struct SLE
         this->T = matrix;
         this->A_I = matrix;
         this->A = matrix;
+        this->I = matrix;
 
         this->T_b = vec;
         this->b = vec;
@@ -137,11 +139,7 @@ struct SLE
     {
         for (int i = 0; i < n; i++)
         {
-            double sum = 0;
-            for (int j = 0; j < n; j++)
-                sum += x[j] * A[i][j];
-
-            r[i] = b[i] - sum;
+            r[i] = b[i] - prod_of_vecs(x, A[i]);
         }
     }
 
@@ -155,6 +153,25 @@ struct SLE
             backward_elimination();
             for (int r = 0; r < n; r++)
                 A_I[r][c] = x[r];
+        }
+    }
+
+    double prod_of_vecs(vector<double> v1, vector<double> v2)
+    {
+        double sum = 0;
+        for (int j = 0; j < n; j++)
+            sum += v1[j] * v2[j];
+        return sum;
+    }
+
+    void multiply_matrices()
+    {
+        for (int r = 0; r < n; r++)
+        {
+            for (int c = 0; c < n; c++)
+            {
+                I[r][c] = prod_of_vecs(A[r], A_I[c]);
+            }
         }
     }
 
@@ -181,6 +198,10 @@ struct SLE
         find_inverse();
         cout << "Inverse matrix:" << endl;
         print_matrix(A_I);
+
+        multiply_matrices();
+        cout << "Result of A * A⁻¹:" << endl;
+        print_matrix(I);
     }
 };
 
