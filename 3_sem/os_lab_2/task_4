@@ -1,0 +1,19 @@
+if [[ -d $1 && -d $4 ]]
+then
+    files_in_first_dir=$(ls $1 | wc -l)
+    files_in_second_dir=$(ls $4 | wc -l)
+    if [[ $files_in_first_dir > $files_in_second_dir ]]
+    then
+        echo "$1 > $4"
+    fi
+    
+    if [[ $files_in_first_dir < $files_in_second_dir ]]
+    then
+        echo "$1 < $4"
+    fi
+    
+    if [[ $files_in_first_dir == $files_in_second_dir ]]
+    then
+        echo "$1 = $4"
+    fi
+fi

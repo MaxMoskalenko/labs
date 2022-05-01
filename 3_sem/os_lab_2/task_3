@@ -1,0 +1,7 @@
+for num in "$@"
+do
+    for div in 5 2 5 77 13
+    do
+        echo $num % $div = $(expr $num % $div)
+    done
+done

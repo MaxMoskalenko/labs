@@ -1,0 +1,8 @@
+for file in "$@"
+do
+    if [[ "$2" == "$file" || "$4" == "$file" ]]
+    then
+        chmod +r $file
+    fi
+    ls -l $file
+done
